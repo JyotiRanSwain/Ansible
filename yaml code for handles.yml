@@ -1,0 +1,12 @@
+--- # yaml code for handles
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+         - name: install httpd on linux
+           action: yum name=httpd sate=present
+           notify: httpd server start
+  handlers:
+         - name: httpd server start
+           action: service name=httpd sate=started

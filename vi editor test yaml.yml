@@ -1,0 +1,19 @@
+--- # vi editor test yaml
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+        - name: creating a file
+          file: 
+                path: "/opt/jyoti.txt"
+                state: touch
+        - name: write somthing
+          copy:
+                dest: "/opt/jyoti.txt"
+                content: |
+                      export M2_HOME=/opt/maven
+                      export PATH=${M2_HOME}/bin:${PATH}
+                      export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+                      export PATH=${JAVA_HOME}/bin:${PATH}
+                      sudo systemctl enable jenkins

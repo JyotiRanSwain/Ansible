@@ -1,0 +1,10 @@
+--- # yaml code for variables
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  vars:
+        pakgname: httpd
+  tasks:
+      - name: install httpd on linux
+        action: yum name='{{pakname}}' state=present
