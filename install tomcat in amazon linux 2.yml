@@ -1,0 +1,25 @@
+- hosts: demo # install tomcat7 in amazon linux 2
+  connection: ssh
+  become: yes
+  tasks:
+        - name: install java 8
+          action: yum name=java-1.8.0-openjdk state=present
+
+        - name: OpenJDK 8 JDK
+          action: yum name=java-1.8.0-openjdk-devel state=present
+
+        - name: Create a Tomcat Directory
+          file:
+               path: /opt/tomcat
+               mode: 755
+               recurse: yes
+
+        - name: download & unarchive tomcat7
+          unarchive:
+                    src: http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.61/bin/apache-tomcat-7.0.61.tar.gz
+                    dest: /opt/tomcat
+                    remote_src: yes
+                    extra_opts: [--strip-components=1]
+
+        - name: start tomcat services
+          shell: nohup /opt/tomcat/bin/startup.sh
