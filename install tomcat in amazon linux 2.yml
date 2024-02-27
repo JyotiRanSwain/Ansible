@@ -2,11 +2,24 @@
   connection: ssh
   become: yes
   tasks:
-        - name: install java 8
-          action: yum name=java-1.8.0-openjdk state=present
+       - name: Install required packages
+          yum:
+           name:
+             - java-17-amazon-corretto
+           state: present
 
-        - name: OpenJDK 8 JDK
-          action: yum name=java-1.8.0-openjdk-devel state=present
+        - name: Install required packages
+          yum:
+           name:
+             - java-17-amazon-corretto-devel
+           state: present
+
+        - name: Set JAVA_HOME environment variable
+          lineinfile:
+            dest: /etc/environment
+            line: 'JAVA_HOME=/usr/lib/jvm/java-17-openjdk'
+            state: present
+
 
         - name: Create a Tomcat Directory
           file:
@@ -16,7 +29,7 @@
 
         - name: download & unarchive tomcat7
           unarchive:
-                    src: http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.61/bin/apache-tomcat-7.0.61.tar.gz
+                    src: http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.86/bin/apache-tomcat-9.0.86.tar.gz
                     dest: /opt/tomcat
                     remote_src: yes
                     extra_opts: [--strip-components=1]
