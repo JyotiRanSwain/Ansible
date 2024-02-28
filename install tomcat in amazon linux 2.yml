@@ -26,7 +26,7 @@
         mode: 755
         recurse: yes
 
-    - name: download & unarchive tomcat7
+    - name: download & unarchive tomcat9
       unarchive:
         src: http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.86/bin/apache-tomcat-9.0.86.tar.gz
         dest: /opt/tomcat
