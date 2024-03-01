@@ -1,0 +1,26 @@
+---
+- hosts: demo
+  become: yes
+  connection: ssh
+
+  vars:
+    aws_access_key: <your aws access key>
+    aws_secret_key: <your secret key>
+    s3_bucket: <your bucket name>
+    s3_region: ap-south-1
+
+  tasks:
+    - name: Copy files to S3
+      aws_s3:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        region: "{{ s3_region }}"
+        bucket: "{{ s3_bucket }}"
+        object: "yourfile.war"
+        dest: "/opt/tomcat/webapps/yourfile.war"
+        mode: get
+        force: yes  # Force the copy action
+      register: s3_copy
+
+    - debug:
+        var: s3_copy
